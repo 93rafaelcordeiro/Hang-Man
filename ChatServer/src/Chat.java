@@ -1,9 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Stream;
 
 
@@ -11,133 +9,137 @@ public class Chat {
 
     static LinkedList<ClientH> clientsList = new LinkedList<>();
 
+
     public static void main(String[] args) throws IOException {
 
-        int port =8080;
+        int port =1010;
 
         ServerSocket ss = new ServerSocket(port);
         Socket clientS;
-        int name=0;
+        String name=null;
+        int clientcounter=0;
 
         while (true)
         {
-           try {
+            try {
 
-            clientS = ss.accept();
-            name++;
-            System.out.println("New client  received : " + clientS);
+                clientS = ss.accept();
+                clientcounter++;
+                System.out.println("New client  received : " + clientS);
 
-            DataInputStream in = new DataInputStream(clientS.getInputStream());
+                DataInputStream in = new DataInputStream(clientS.getInputStream());
 
-            PrintWriter out = new PrintWriter(clientS.getOutputStream(),true);
+                PrintWriter out = new PrintWriter(clientS.getOutputStream(),true);
 
-            ClientH client = new ClientH(clientS,clientsList,String.valueOf(name));
+                ClientH client = new ClientH(clientS,clientsList, null);
 
-            System.out.println("Creating runnable for this client...");
+                System.out.println("Creating runnable for this client...");
 
-            Thread t = new Thread(client);
+                Thread t = new Thread(client);
 
-            System.out.println("Adding this client to active client list");
+                System.out.println("Adding this client to active client list");
 
-            clientsList.offer(client);
+                clientsList.offer(client);
 
-            t.start();
+                t.start();
 
 
 
-        } catch (IOException e) {
-               e.printStackTrace();
-           }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-}
-
-static class ClientH implements Runnable {
-    private Scanner scanner = new Scanner(System.in);
-    private String name;
-    private DataInputStream in;
-    private PrintWriter out;
-    private Socket clientS;
-
-
-    public ClientH(Socket clientS, LinkedList<ClientH> clientsList, String name) {
-
-        this.name = name;
-        this.clientS = clientS;
-
     }
 
-    @Override
-    public synchronized void run() {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientS.getInputStream()));
-            out = new PrintWriter(clientS.getOutputStream(), true);
+    static class ClientH implements Runnable {
+        private Scanner scanner = new Scanner(System.in);
+        private String name;
+        private DataInputStream in;
+        private PrintWriter out;
+        private Socket clientS;
+        String outS;
 
-            while (true) {
-                String outS = in.readLine();
+        public ClientH(Socket clientS, LinkedList<ClientH> clientsList, String name) {
 
-                if (outS.equals("users")) {
-                    for (ClientH c : clientsList) {
-                        out.println(c.name);
-                    }
+            this.name = name;
+            this.clientS = clientS;
 
-                    if (outS.equals("exit")) {
-                        for (ClientH c : clientsList) {
-                            c.out.println(this.name + " has exited Chat");
-                        }
-                        clientsList.remove(this);
-                        clientS.close();
+        }
 
-                    }
+        @Override
+        public synchronized void run() {
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientS.getInputStream()));
+                out = new PrintWriter(clientS.getOutputStream(), true);
+
+                String[] words = new String[]{"computer", "language", "display",};
+
+
+
+                String randomWord = words[(int) (Math.random() * words.length)];
+                char[] letters = new char[randomWord.length()];
+
+                Arrays.fill(letters, '.');
+
+                if (name == null) {
+                    out.println("Please add your name now :");
+                    this.name = in.readLine();
+
                 }
+                int lives = 8;
 
-                messageAllClients(outS);
-                System.out.println("server received: " + outS);
+                while (lives > 0) {
+                    outS = in.readLine();
+                    out.println("lives : " + lives);
+
+                    out.println();
+                    out.println("Input: ");
+
+                    char letter = outS.charAt(0);
+
+                    out.println();
+
+                    boolean iscorrect = false;
+                    for (int i = 0; i < randomWord.length(); i++) {
+                        char l = randomWord.charAt(i);
+                        if (l == letter) {
+                            letters[i] = l;
+                            iscorrect = true;
+
+                        }
+                    }
+                    if (!iscorrect) {
+                        lives--;
+                    }
+
+                    out.println("Word : ");
+
+                    for (char b : letters) {
+                        if (b == '.') iscorrect = false;
+                        out.println(b);
+                    }
+
+
+                    out.println();
+                    out.println("---------------------------");
+
+                    if (iscorrect) {
+                        out.println("You won");
+
+                    }
+                    if (lives == 0) {
+                        out.println("you lost the word was " + randomWord);
+                        break;
+                    }
+
+
+                }
+                out.println("Exiting game");
+
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public synchronized void messageAllClients(String outS) throws IOException {
-        String[] st;
-        String MsgToSend = null;
-        String recipient = null;
-        if (outS.contains("#")) {
-            st = outS.split("#");
-            MsgToSend = st[1];
-            recipient = st[0];
-        }
-
-
-        for (ClientH c : clientsList) {
-
-            if (c.name.equals(recipient)) {
-                c.out.println(this.name + ": DM : " + MsgToSend);
-                break;
-            }
-
-            if (recipient.equals("all")) {
-                c.out.println(this.name + ": Broadcast: " + MsgToSend);
-            }
-        }
-        if (recipient.equals(this.name)) {
-            out.println("This client its you");
-        }
-        if (recipient.equals("") || !(recipient.equals(clientsList.element().name))) {
-            out.println("Client does not exist");
-        }
-
-
-
-    }
-
-
-} 
-        }
-
-
-
+        }}}
 
 
