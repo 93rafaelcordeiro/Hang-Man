@@ -58,20 +58,20 @@ public class ClientH implements Runnable {
                     String hint= Hint();
                     char[] letters = new char[randomWord.length()];
 
-                    Arrays.fill(letters, '.');
+                    Arrays.fill(letters, '_');
 
 
                         if(name == null) {
                             out.println("                                HANGMAN");Thread.sleep(1000);
-                            out.println(("                         The game Rules are,"));Thread.sleep(1000);
-                            out.println(("                      Write a letter or the word"));Thread.sleep(1200);
-                            out.println(("                  If the letter is wrong or the word"));Thread.sleep(1300);
-                            out.println((" The hangman starts taking form, and you only have 6 wrong attempts"));Thread.sleep(2200);
-                            out.println(("                 If the Hangman fully forms, its Game OVER"));Thread.sleep(1300);
-                            out.println(("                   If you guess the word right you WIN"));Thread.sleep(1500);
+                            out.println(("                         The game Rules are,"));Thread.sleep(100);
+                            out.println(("                      Write a letter or the word"));Thread.sleep(120);
+                            out.println(("                  If the letter is wrong or the word"));Thread.sleep(130);
+                            out.println((" The hangman starts taking form, and you only have 6 wrong attempts"));Thread.sleep(220);
+                            out.println(("                 If the Hangman fully forms, its Game OVER"));Thread.sleep(130);
+                            out.println(("                   If you guess the word right you WIN"));Thread.sleep(150);
 
-                            out.println("If you write exit you will exit the game");Thread.sleep(1500);
-                            out.println("Lets Play!" );Thread.sleep(1500);
+                            out.println("If you write exit you will exit the game");Thread.sleep(100);
+                            out.println("Lets Play!" );Thread.sleep(100);
 
 
                             out .println("Please write your name now :");
@@ -79,12 +79,10 @@ public class ClientH implements Runnable {
                         }
 
                         if(!(name ==null)){
-                            Thread.sleep(500);
+                            Thread.sleep(200);
                           out.println("Type 'play' to start the game");
                         }
                         outS=in.readLine();
-
-
                 if (outS.equals("exit")) {
 
                     out.println(this.name + " has Exited the Game ");
@@ -92,40 +90,87 @@ public class ClientH implements Runnable {
                     clientS.close();
                 }
                 if (outS.equals("play")) {
-                    Thread.sleep(500); out.println("                   Let the Game BEGIN");
-                    Thread.sleep(500);out.println(hint);
+                    Thread.sleep(200); out.println("                   Let the Game BEGIN");
+                    out.println();
+                    Thread.sleep(200);out.println(hint);
                     out.println("Enter your first letter or guess");
-
                     int lives = 6;
 
-                    while (lives > 0) {
+                    while (lives >= 0) {
+
                         outS = in.readLine();
 
+                        if (outS.equals("exit")) {
+
+                            out.println(this.name + " has Exited the Game ");
+                            server.clientsList.remove(this);
+                            clientS.close();}
+
+
+
                         if (outS.equals(randomWord)) {
-                            Thread.sleep(500);
+                            Thread.sleep(300);
                             out.println(name+" you won the Game, write play to play next guess or exit to quit. ");
                             if(outS.equals("play"))  {
                               this.run();
                             }
-                            Thread.sleep(500);
+                            Thread.sleep(300);
                             out.println("The word is indeed " + randomWord);
                             break;
                         }
 
-                        Thread.sleep(500); out.println();
+                        if(lives<=6) {
+                            out.println(" _______");
+                            out.println(" |     |");
+
+                            if (lives <= 5) {
+                                out.println(" O");
+
+                                if (lives <= 4) {
+                                    out.print("\\ ");
+
+                                    if (lives <= 3) {
+                                        out.println("/");
+
+                                        if (lives <= 2) {
+                                            out.println(" |");
+
+                                            if (lives <= 1) {
+                                                out.print("/ ");
+
+                                                if (lives == 0) {
+                                                    out.println("\\");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
 
-                        Thread.sleep(500);out.println("Input: ");
-                        out.println(outS);
 
+
+                        Thread.sleep(100); out.println();
+                        Thread.sleep(100);out.println("Input: ");
+                        if(outS.equals(" ")) {
+                             out.println(" space key ");
+                         }
+                        else{out.println(outS);}
+                        out.println();
+
+                        if(!outS.equals(randomWord)&& outS.length()>=2){
+                            out.println("Your guess was wrong!");
+
+                        }
 
                         char letter;
-
-                        letter = outS.charAt(0);
+                            letter = outS.charAt(0);
 
                         out.println();
 
                         boolean iscorrect = false;
+
                         for (int i = 0; i < randomWord.length(); i++) {
                             char l = randomWord.charAt(i);
                             if (l == letter) {
@@ -133,34 +178,52 @@ public class ClientH implements Runnable {
                                 iscorrect = true;
                             }
                         }
+
                         if (!iscorrect) {
                             lives--;
                         }
-                        Thread.sleep(500);
+                        Thread.sleep(200);
+
                         out.println("Word : ");
 
                         for (char b : letters) {
-                            if (b == '.') iscorrect = false;
-                            out.print(b);
+                            if (b == '_') iscorrect = false;
+                            out.print(" "+b+" ");
+
                         }
 
                         out.println();
                         out.println("---------------------------");
 
                         if (iscorrect) {
-                            Thread.sleep(500);
+                            Thread.sleep(200);
                             out.println(name.toUpperCase()+" You won");
                             this.run();
 
                         }
-                        if (lives == 0) {
-                            Thread.sleep(500);
-                            out.println(name.toUpperCase()+ "you lost!! The word was " + randomWord);
+
+                        if (lives < 0) {
+                            out.println();
+                            out.println();
+                            out.println();
+                            out.println(" _______");
+                            out.println(" |     |");
+                            out.println(" O");
+                            out.print("\\ ");
+                            out.println("/");
+                            out.println(" |");
+                            out.print("/ ");
+                            out.println("\\");
+
+                            Thread.sleep(200);
+                            out.println(name.toUpperCase()+ " you lost!! The word was " + randomWord);
 
                             break;
                         }
-                    }} Thread.sleep(500);
+                    }
+                } Thread.sleep(200);
                 out.println("Game Over");
+                out.println();
 
            }
             } catch (InterruptedException interruptedException) {
@@ -168,43 +231,10 @@ public class ClientH implements Runnable {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-
-
-
-
-
     }
 
-    public synchronized void messageAllClients(String outS) throws IOException {
-        String[] st;
-        String MsgToSend = null;
-        String recipient = null;
-        if (outS.contains("#")) {
-            st = outS.split("#");
-            MsgToSend = st[1];
-            recipient = st[0];
 
-            for (ClientH c : server.clientsList) {
-                if (c.name.equals(recipient)) {
-                    c.out.println(this.name + ": DM : " + MsgToSend);
-                    break;
-                }
-                out.println("Word : ");
-
-                if (recipient.equals("all")) {
-                    c.out.println(this.name + ": Broadcast: " + MsgToSend);
-                }
-            }
-            if (recipient.equals(this.name)) {
-                out.println("This client its you");
-            }
-            if (recipient.equals("") || !(recipient.equals(server.clientsList.element().name))) {
-                out.println("Client does not exist");
-            }
-
-
-        }
-    }public String Hint(){
+    public String Hint(){
         String hint;
         if(randomWord.equals(strings.words[0])){
             return hint=strings.hints[0];
@@ -266,17 +296,10 @@ public class ClientH implements Runnable {
         }
 
         return hint=strings.hints[28];
-    }
-
-public synchronized void tt() {
-        if (outS.equals("users")) {
-        for (ClientH c : server.clientsList) {
-        out.println(c.name);
-        }
+    }}
 
 
-        }
-        }
-        }
+
+
 
 
