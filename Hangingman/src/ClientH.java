@@ -1,3 +1,4 @@
+import javax.xml.bind.annotation.XmlSchemaType;
 import java.io.*;
 import java.net.Socket;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class ClientH implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
+    public synchronized void run()  {
         try {
 
 
@@ -84,6 +85,9 @@ public class ClientH implements Runnable {
                           out.println("Type 'play' to start the game");
                         }
                         outS=in.readLine();
+
+                if(outS.equals("\n")) continue;
+
                 if (outS.equals("exit")) {
 
                     out.println(this.name + " has Exited the Game ");
@@ -95,18 +99,28 @@ public class ClientH implements Runnable {
                     out.println();
                     Thread.sleep(200);out.println(hint);
                     out.println("Enter your first letter or guess");
+
+
+
                     int lives = 6;
+
+
 
                     while (lives >= 0) {
 
+
                         outS = in.readLine();
+
+
+                        if(outS.equals("clear")){
+                            this.run();
+                        }
 
                         if (outS.equals("exit")) {
 
                             out.println(this.name + " has Exited the Game ");
                             server.clientsList.remove(this);
                             clientS.close();}
-
 
 
                         if (outS.equals(randomWord)) {
@@ -166,7 +180,12 @@ public class ClientH implements Runnable {
                         }
 
                         char letter;
-                            letter = outS.charAt(0);
+
+                        if (outS.length() < 1) {
+                            out.println("next line is empty");
+                        letter=' ';}
+                        else letter = outS.charAt(0);
+
 
                         out.println();
 
