@@ -74,7 +74,8 @@ public class ClientH implements Runnable {
                             out.println("Lets Play!" );Thread.sleep(100);
 
 
-                            out .println("Please write your name now :");
+                            out.println("Please write your name now :");
+
                             name = in.readLine();
                         }
 
@@ -110,7 +111,7 @@ public class ClientH implements Runnable {
 
                         if (outS.equals(randomWord)) {
                             Thread.sleep(300);
-                            out.println(name+" you won the Game, write play to play next guess or exit to quit. ");
+                            out.println(name.toUpperCase()+" you won the Game!!!  Write 'play' to go to next guess or 'exit' to quit. ");
                             if(outS.equals("play"))  {
                               this.run();
                             }
@@ -237,63 +238,115 @@ public class ClientH implements Runnable {
     public String Hint(){
         String hint;
         if(randomWord.equals(strings.words[0])){
-            return hint=strings.hints[0];
-        }if(randomWord.equals(strings.words[1])){
-            return hint=strings.hints[1];
-        }if(randomWord.equals(strings.words[2])){
             return hint=strings.hints[2];
-        }if(randomWord.equals(strings.words[3])){
-            return hint=strings.hints[3];
-        }if(randomWord.equals(strings.words[4])){
-            return hint=strings.hints[4];
-        }if(randomWord.equals(strings.words[5])){
-            return hint=strings.hints[5];
-        }if(randomWord.equals(strings.words[6])){
-            return hint=strings.hints[6];
-        }if(randomWord.equals(strings.words[7])){
-            return hint=strings.hints[7];
-        }if(randomWord.equals(strings.words[8])){
-            return hint=strings.hints[8];
-        }if(randomWord.equals(strings.words[9])){
-            return hint=strings.hints[9];
-        }if(randomWord.equals(strings.words[10])){
+
+        }if(randomWord.equals(strings.words[1])){
             return hint=strings.hints[10];
+
+        }if(randomWord.equals(strings.words[2])){
+            return hint=strings.hints[10];
+
+        }if(randomWord.equals(strings.words[3])){
+            return hint=strings.hints[10];
+
+        }if(randomWord.equals(strings.words[4])){
+            return hint=strings.hints[15];
+
+        }if(randomWord.equals(strings.words[5])){
+            return hint=strings.hints[15];
+
+        }if(randomWord.equals(strings.words[6])){
+            return hint=strings.hints[10];
+
+        }if(randomWord.equals(strings.words[7])){
+            return hint=strings.hints[12];
+
+        }if(randomWord.equals(strings.words[8])){
+            return hint=strings.hints[12];
+
+        }if(randomWord.equals(strings.words[9])){
+            return hint=strings.hints[16];
+
+        }if(randomWord.equals(strings.words[10])){
+            return hint=strings.hints[17];
+
         }if(randomWord.equals(strings.words[11])){
-            return hint=strings.hints[11];
+            return hint=strings.hints[13];
+
         }
         if(randomWord.equals(strings.words[12])){
-            return hint=strings.hints[12];
+            return hint=strings.hints[7];
+
         }if(randomWord.equals(strings.words[13])){
-            return hint=strings.hints[13];
+            return hint=strings.hints[11];
+
         }if(randomWord.equals(strings.words[14])){
-            return hint=strings.hints[14];
-        }if(randomWord.equals(strings.words[15])){
-            return hint=strings.hints[15];
-        }if(randomWord.equals(strings.words[16])){
-            return hint=strings.hints[16];
-        }if(randomWord.equals(strings.words[17])){
-            return hint=strings.hints[17];
-        }if(randomWord.equals(strings.words[18])){
             return hint=strings.hints[18];
-        }if(randomWord.equals(strings.words[19])){
-            return hint=strings.hints[19];
-        }if(randomWord.equals(strings.words[20])){
-            return hint=strings.hints[20];
-        }if(randomWord.equals(strings.words[21])){
-            return hint=strings.hints[21];
-        }if(randomWord.equals(strings.words[22])){
+
+        }if(randomWord.equals(strings.words[15])){
+            return hint=strings.hints[11];
+
+        }if(randomWord.equals(strings.words[16])){
+            return hint=strings.hints[11];
+
+        }if(randomWord.equals(strings.words[17])){
             return hint=strings.hints[22];
-        }if(randomWord.equals(strings.words[23])){
-            return hint=strings.hints[23];
-        }if(randomWord.equals(strings.words[24])){
+
+        }if(randomWord.equals(strings.words[18])){
+            return hint=strings.hints[19];
+
+        }if(randomWord.equals(strings.words[19])){
+            return hint=strings.hints[21];
+
+        }if(randomWord.equals(strings.words[20])){
             return hint=strings.hints[24];
-        }if(randomWord.equals(strings.words[25])){
+
+        }if(randomWord.equals(strings.words[21])){
+            return hint=strings.hints[32];
+
+        }if(randomWord.equals(strings.words[22])){
             return hint=strings.hints[25];
+
+        }if(randomWord.equals(strings.words[23])){
+            return hint=strings.hints[33];
+
+        }if(randomWord.equals(strings.words[24])){
+            return hint=strings.hints[35];
+
+        }if(randomWord.equals(strings.words[25])){
+            return hint=strings.hints[20];
+
         }if(randomWord.equals(strings.words[26])){
             return hint=strings.hints[26];
+
         }if(randomWord.equals(strings.words[27])){
-            return hint=strings.hints[27];
+            return hint=strings.hints[23];
         }
+        if(randomWord.equals(strings.words[28])) {
+            return hint = strings.hints[28];
+        }
+        if(randomWord.equals(strings.words[29])) {
+            return hint = strings.hints[36];
+        }
+        if(randomWord.equals(strings.words[30])) {
+            return hint = strings.hints[31];
+        }
+        if(randomWord.equals(strings.words[31])) {
+            return hint = strings.hints[37];
+        }
+        if(randomWord.equals(strings.words[32])) {
+            return hint = strings.hints[38];
+        }
+        if(randomWord.equals(strings.words[33])) {
+            return hint = strings.hints[39];
+        }
+        if(randomWord.equals(strings.words[34])) {
+            return hint = strings.hints[29];
+        }
+        if(randomWord.equals(strings.words[35])) {
+            return hint = strings.hints[30];
+        }
+
 
         return hint=strings.hints[28];
     }}

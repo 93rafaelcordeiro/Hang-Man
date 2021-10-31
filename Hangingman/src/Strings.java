@@ -57,7 +57,7 @@ public class Strings {
             "HINT: Your word has 12 letters.",
             "HINT: Your word has 11 letters.",
             "HINT: Your word had 9 letters.",
-            "HINT: Your word has 6 letters.",
+            "HINT: Your word has 8 letters.",
 
             "HINT: Your word has 7 letters.",
             "HINT: Your word has 6 letters.",
@@ -70,6 +70,12 @@ public class Strings {
             "HINT: Your word is related with computer languages.",
             "HINT: The platform you use to share your projects with other peers.",
             "HINT: Sequence of characters that exist as an object of the class java.",
+
+            "HINT: Is an essential concept while working on java programming.",
+            "HINT: Is the runtime engine of the Java Platform.",
+            "HINT: Organizes a program around the various objects and well-defined interfaces.",
+            "HINT: Leading American computer manufacturer.",
+            "HINT: A way to programmatically interact with a separate software component or resource.",
 
             "HINT: A container object that holds a fixed number of values of a single type.",
             "HINT: Used to store only two possible values, either true or false.",
@@ -86,7 +92,13 @@ public class Strings {
             "HINT: The path followed when executing a program.",
             "HINT: Instructions that tell a computer what to do.",
             "HINT: A single character.",
-            "HINT: A user defined blueprint or prototype from which objects are created."
+            "HINT: A user defined blueprint or prototype from which objects are created.",
+            "HINT: Has an identity, a behavior and a state.",
+            "HINT: A sequence of characters.",
+            "HINT: Methods are used to perform certain actions, and they are also known as...",
+            "HINT: The process of reducing the object to its essence so that only the necessary characteristics are exposed to the users.",
+            "HINT: The ability of an object to take many forms.",
+            "HINT: Describes the idea of bundling data and methods that work on that data within one unit.",
     };
 
 
